@@ -1,69 +1,271 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Chattogram Steel Scrap Connect — steel scrap buyers and suppliers in Bangladesh.">
-<meta name="theme-color" content="#102a2a">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chattogram Steel Scrap Connect</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--ink:#172e2c;--muted:#61736e;--green:#087e68;--lime:#d8ef75;--paper:#f4f7f3;--line:#dce6df;--dark:#102a2a;--white:#fff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}.wrap{width:min(1120px,92%);margin:auto}
-.top{background:var(--dark);color:#d9e6df;padding:8px 0;font-size:13px}.top .wrap,.nav,.foot{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-header{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}.nav{padding:12px 0}.brand{display:flex;align-items:center;gap:10px;font-weight:850;font-size:13px;line-height:1.2}.logo{width:42px;height:42px;border-radius:12px;background:var(--green);color:white;display:grid;place-items:center;font-size:22px}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.links,.actions{display:flex;align-items:center;gap:15px}.links{font-size:13px;font-weight:750}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:750;cursor:pointer;display:inline-flex;justify-content:center;align-items:center;gap:7px}.primary{background:var(--green);color:white}.outline{background:white;border:1px solid var(--line);color:var(--ink)}.darkbtn{background:var(--dark);color:white}
-.hero{background:linear-gradient(115deg,#0b2928f2,#086653df),url('https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=1800&q=85') center/cover;color:white;padding:65px 0}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}.eyebrow{color:var(--lime);font-size:12px;font-weight:850;letter-spacing:1.5px;text-transform:uppercase}.hero h1{font-size:clamp(35px,5vw,58px);line-height:1.08;margin:14px 0;letter-spacing:-1px}.hero p{color:#d8e5df;font-size:17px;max-width:650px}.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}.hero .outline{background:transparent;border-color:#9bb9ad;color:white}.trust,.panel,.card{background:white;color:var(--ink);border:1px solid var(--line);border-radius:15px;padding:21px}.trust{box-shadow:0 15px 45px #0003}.trust h3{margin-top:0}.trust-item{padding:9px 0;border-top:1px solid var(--line)}.tick{color:var(--green);font-weight:900;margin-right:8px}.section{padding:58px 0}.soft{background:#eaf1eb}.section-head{max-width:760px;margin-bottom:25px}.section-head h2{font-size:clamp(26px,4vw,37px);line-height:1.2;margin:8px 0}.section-head p,.card p{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card h3{margin:8px 0 4px}.card p{font-size:14px;margin:0}.symbol{font-size:27px}.split{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{margin:12px 0}.field label{display:block;font-size:13px;font-weight:750;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:11px;border:1px solid #ccd8d0;border-radius:8px;background:white;color:var(--ink)}.field textarea{min-height:85px;resize:vertical}.hint{font-size:12px;color:var(--muted)}.notice{background:#fff8df;border:1px solid #eadb9a;border-radius:12px;padding:13px 15px;color:#5b4a17;font-size:13px;margin:15px 0}.listing{display:flex;flex-direction:column;gap:8px}.listing .meta{font-size:12px;color:var(--muted)}.tag{display:inline-block;background:#e6f3ee;color:#086653;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:800}.listing-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.listing-actions .btn{font-size:12px;padding:8px 11px}.filters{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;margin-bottom:17px}.filters input,.filters select{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:white}.empty{padding:22px;text-align:center;border:1px dashed #b7c8be;border-radius:12px;color:var(--muted)}.contact{background:var(--dark);color:white;padding:42px 0}.contact p{color:#c9d8d1}.mail{color:var(--lime);font-weight:750}footer{background:#0b201f;color:#c0d0c8;padding:20px 0;font-size:13px}.admin{background:#fff;border:1px dashed #9bb9ad;padding:18px;border-radius:12px}.admin summary{cursor:pointer;font-weight:800}.hidden{display:none!important}
-@media(max-width:800px){.links{display:none}.hero-grid,.split{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.hero{padding:48px 0}}
-@media(max-width:520px){.cards{grid-template-columns:1fr}.hero h1{font-size:37px}.brand{font-size:11px}.logo{width:36px;height:36px}.btn{padding:10px 12px;font-size:13px}.filters{grid-template-columns:1fr}.top .wrap{font-size:11px}}
+:root{--g:#0a9d4a;--gd:#067a38;--bg:#0d1210;--card:#161d19;--bd:#26322b;--tx:#eef3ef;--mu:#9bab9f;--rd:#e5484d;--yl:#f5b73b}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,"Noto Sans Bengali",sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+header{padding:18px 16px 8px;text-align:center}
+header h1{margin:0;font-size:22px;color:var(--g);font-style:italic}
+header p{margin:2px 0 0;color:var(--mu);font-size:13px;letter-spacing:2px}
+nav{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;position:sticky;top:0;background:var(--bg);z-index:5;border-bottom:1px solid var(--bd)}
+nav button{flex:0 0 auto;background:var(--card);color:var(--tx);border:1px solid var(--bd);padding:9px 14px;border-radius:999px;font-size:14px}
+nav button.on{background:var(--g);border-color:var(--g);color:#fff}
+main{max-width:760px;margin:0 auto;padding:14px}
+.sec{display:none}.sec.on{display:block}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.card .pad{padding:12px 14px}
+.imgs{display:flex;gap:2px;overflow-x:auto;background:#000}
+.imgs img{height:170px;width:auto;max-width:100%;object-fit:cover;flex:0 0 auto}
+.badge{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;font-weight:600}
+.sell{background:#0a9d4a22;color:#3ddc84}.buy{background:#f5b73b22;color:var(--yl)}
+.pending{background:#f5b73b22;color:var(--yl)}.approved{background:#0a9d4a22;color:#3ddc84}.rejected,.sold{background:#e5484d22;color:#ff8a8e}
+h3{margin:6px 0 4px;font-size:17px}
+.meta{color:var(--mu);font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600;color:#fff;background:var(--g);text-decoration:none;display:inline-block}
+.btn.wa{background:#25d366;color:#04210f}.btn.gray{background:#2a3530}.btn.red{background:var(--rd)}.btn.sm{padding:7px 11px;font-size:13px}
+label{display:block;font-size:13px;color:var(--mu);margin:10px 0 4px}
+input,select,textarea{width:100%;background:#0f1612;color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:11px;font-size:15px;font-family:inherit}
+textarea{min-height:80px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.filters input{grid-column:1/-1}
+.msg{padding:10px 12px;border-radius:10px;margin:10px 0;font-size:14px;display:none}
+.msg.ok{display:block;background:#0a9d4a22;color:#3ddc84}.msg.err{display:block;background:#e5484d22;color:#ff8a8e}
+.empty{text-align:center;color:var(--mu);padding:30px 10px}
+.prev{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.prev img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+.modal{position:fixed;inset:0;background:#000a;display:none;align-items:flex-end;justify-content:center;z-index:20}
+.modal.on{display:flex}.modal .box{background:var(--card);width:100%;max-width:520px;border-radius:16px 16px 0 0;padding:16px}
+h2{font-size:18px;margin:4px 0 8px}
+.tabs2{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+footer{text-align:center;color:var(--mu);font-size:12px;padding:20px}
 </style>
 </head>
 <body>
-<div class="top"><div class="wrap"><span data-en="Chattogram, Bangladesh · Steel Scrap Brokerage & Sourcing" data-bn="চট্টগ্রাম, বাংলাদেশ · স্টিল স্ক্র্যাপ ব্রোকারেজ ও সোর্সিং">চট্টগ্রাম, বাংলাদেশ · স্টিল স্ক্র্যাপ ব্রোকারেজ ও সোর্সিং</span><span data-en="Connecting buyers with suppliers" data-bn="ক্রেতা ও সরবরাহকারীদের সংযুক্ত করছি">ক্রেতা ও সরবরাহকারীদের সংযুক্ত করছি</span></div></div>
-<header><div class="wrap nav"><a class="brand" href="#home"><span class="logo">♻</span><span>CHATTOGRAM STEEL SCRAP CONNECT<small data-en="BUY · SELL · CONNECT" data-bn="কিনুন · বিক্রি করুন · সংযুক্ত হোন">কিনুন · বিক্রি করুন · সংযুক্ত হোন</small></span></a><nav class="links"><a href="#about" data-en="About" data-bn="পরিচিতি">পরিচিতি</a><a href="#materials" data-en="Scrap Types" data-bn="স্ক্র্যাপের ধরন">স্ক্র্যাপের ধরন</a><a href="#marketplace" data-en="Marketplace" data-bn="মার্কেটপ্লেস">মার্কেটপ্লেস</a><a href="#register" data-en="Register" data-bn="নিবন্ধন">নিবন্ধন</a><a href="#contact" data-en="Contact" data-bn="যোগাযোগ">যোগাযোগ</a></nav><div class="actions"><button class="btn outline" id="langBtn" type="button">English</button><a class="btn primary" href="#marketplace" data-en="Get Started" data-bn="শুরু করুন">শুরু করুন</a></div></div></header>
-<main id="home">
-<section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow" data-en="Your Chattogram Scrap Connection" data-bn="আপনার চট্টগ্রামের স্ক্র্যাপ সংযোগ">আপনার চট্টগ্রামের স্ক্র্যাপ সংযোগ</div><h1 data-en="Steel Scrap Trading, Made More Connected." data-bn="স্টিল স্ক্র্যাপ ব্যবসা হোক আরও সংযুক্ত।">স্টিল স্ক্র্যাপ ব্যবসা হোক আরও সংযুক্ত।</h1><p data-en="We help steel scrap buyers and suppliers connect in Chattogram and across Bangladesh. Share your requirement or available stock and start a business conversation." data-bn="চট্টগ্রাম ও বাংলাদেশের বিভিন্ন এলাকার স্টিল স্ক্র্যাপ ক্রেতা ও সরবরাহকারীদের যোগাযোগে সহায়তা করি। আপনার চাহিদা অথবা বিক্রির জন্য থাকা স্টকের তথ্য দিন এবং ব্যবসায়িক আলোচনা শুরু করুন।">চট্টগ্রাম ও বাংলাদেশের বিভিন্ন এলাকার স্টিল স্ক্র্যাপ ক্রেতা ও সরবরাহকারীদের যোগাযোগে সহায়তা করি। আপনার চাহিদা অথবা বিক্রির জন্য থাকা স্টকের তথ্য দিন এবং ব্যবসায়িক আলোচনা শুরু করুন।</p><div class="hero-buttons"><a class="btn primary" href="#marketplace" data-en="Find / Offer Scrap" data-bn="স্ক্র্যাপ কিনুন / বিক্রি করুন">স্ক্র্যাপ কিনুন / বিক্রি করুন</a><a class="btn outline" href="#register" data-en="Join the Network" data-bn="নেটওয়ার্কে যুক্ত হোন">নেটওয়ার্কে যুক্ত হোন</a></div></div><aside class="trust"><h3 data-en="A simple way to connect" data-bn="সহজে ব্যবসায়িক যোগাযোগ">সহজে ব্যবসায়িক যোগাযোগ</h3><div class="trust-item"><span class="tick">✓</span><span data-en="Buyer and supplier registration" data-bn="ক্রেতা ও সরবরাহকারী নিবন্ধন">ক্রেতা ও সরবরাহকারী নিবন্ধন</span></div><div class="trust-item"><span class="tick">✓</span><span data-en="Buy / sell listing form" data-bn="কেনা / বিক্রির বিজ্ঞপ্তি ফর্ম">কেনা / বিক্রির বিজ্ঞপ্তি ফর্ম</span></div><div class="trust-item"><span class="tick">✓</span><span data-en="WhatsApp and email enquiry" data-bn="হোয়াটসঅ্যাপ ও ইমেইলে যোগাযোগ">হোয়াটসঅ্যাপ ও ইমেইলে যোগাযোগ</span></div><div class="trust-item"><span class="tick">✓</span><span data-en="Bilingual experience" data-bn="বাংলা ও ইংরেজি সুবিধা">বাংলা ও ইংরেজি সুবিধা</span></div><p class="hint" data-en="All stock, ownership, documents and prices must be independently verified." data-bn="স্টক, মালিকানা, কাগজপত্র ও মূল্য নিজ দায়িত্বে যাচাই করতে হবে।">স্টক, মালিকানা, কাগজপত্র ও মূল্য নিজ দায়িত্বে যাচাই করতে হবে।</p></aside></div></section>
-<section class="section" id="about"><div class="wrap section-head"><div class="eyebrow" style="color:var(--green)" data-en="Who We Are" data-bn="আমরা কারা">আমরা কারা</div><h2 data-en="Connecting the steel scrap supply chain." data-bn="স্টিল স্ক্র্যাপ সরবরাহ ব্যবস্থাকে সংযুক্ত করছি।">স্টিল স্ক্র্যাপ সরবরাহ ব্যবস্থাকে সংযুক্ত করছি।</h2><p data-en="A broker-led connection platform helping buyers and suppliers discuss material type, quantity, location, specifications and commercial terms. All offers are subject to independent verification and agreement between the parties." data-bn="এটি একটি ব্রোকার-ভিত্তিক যোগাযোগ প্ল্যাটফর্ম। ক্রেতা ও সরবরাহকারীরা স্ক্র্যাপের ধরন, পরিমাণ, অবস্থান, স্পেসিফিকেশন ও বাণিজ্যিক শর্ত নিয়ে আলোচনা করতে পারবেন। সব প্রস্তাব সংশ্লিষ্ট পক্ষের যাচাই ও সম্মতির ওপর নির্ভরশীল।">এটি একটি ব্রোকার-ভিত্তিক যোগাযোগ প্ল্যাটফর্ম। ক্রেতা ও সরবরাহকারীরা স্ক্র্যাপের ধরন, পরিমাণ, অবস্থান, স্পেসিফিকেশন ও বাণিজ্যিক শর্ত নিয়ে আলোচনা করতে পারবেন। সব প্রস্তাব সংশ্লিষ্ট পক্ষের যাচাই ও সম্মতির ওপর নির্ভরশীল।</p></div></section>
-<section class="section soft" id="materials"><div class="wrap"><div class="section-head"><div class="eyebrow" style="color:var(--green)" data-en="Materials" data-bn="স্ক্র্যাপের ধরন">স্ক্র্যাপের ধরন</div><h2 data-en="Scrap categories" data-bn="স্ক্র্যাপের ক্যাটাগরি">স্ক্র্যাপের ক্যাটাগরি</h2><p data-en="Specify exact grade, quality and quantity in every enquiry." data-bn="প্রতিটি অনুরোধে সঠিক গ্রেড, মান ও পরিমাণ উল্লেখ করুন।">প্রতিটি অনুরোধে সঠিক গ্রেড, মান ও পরিমাণ উল্লেখ করুন।</p></div><div class="cards">
-<article class="card"><div class="symbol">🏗️</div><h3>HMS 1 / HMS 1&2</h3><p data-en="Heavy melting steel scrap; grade to be confirmed." data-bn="হেভি মেল্টিং স্টিল স্ক্র্যাপ; গ্রেড যাচাই সাপেক্ষে।">হেভি মেল্টিং স্টিল স্ক্র্যাপ; গ্রেড যাচাই সাপেক্ষে।</p></article>
-<article class="card"><div class="symbol">⚙️</div><h3>MS / Steel Scrap</h3><p data-en="Mild steel offcuts, plates and related material." data-bn="মাইল্ড স্টিলের কাটিং, প্লেট ও সংশ্লিষ্ট উপাদান।">মাইল্ড স্টিলের কাটিং, প্লেট ও সংশ্লিষ্ট উপাদান।</p></article>
-<article class="card"><div class="symbol">🚢</div><h3 data-en="Ship / Industrial Scrap" data-bn="জাহাজ / শিল্পকারখানার স্ক্র্যাপ">জাহাজ / শিল্পকারখানার স্ক্র্যাপ</h3><p data-en="Only lawful sourcing with supporting documents." data-bn="বৈধ উৎস ও প্রয়োজনীয় কাগজপত্রসহ।">বৈধ উৎস ও প্রয়োজনীয় কাগজপত্রসহ।</p></article>
-<article class="card"><div class="symbol">🔩</div><h3 data-en="Cast Iron" data-bn="কাস্ট আয়রন">কাস্ট আয়রন</h3><p data-en="Cast iron scrap and foundry material." data-bn="কাস্ট আয়রন স্ক্র্যাপ ও ফাউন্ড্রি উপাদান।">কাস্ট আয়রন স্ক্র্যাপ ও ফাউন্ড্রি উপাদান।</p></article>
-<article class="card"><div class="symbol">🧰</div><h3>Turning / Boring</h3><p data-en="Ferrous machining scrap; specify condition." data-bn="ফেরাস মেশিনিং স্ক্র্যাপ; অবস্থা উল্লেখ করুন।">ফেরাস মেশিনিং স্ক্র্যাপ; অবস্থা উল্লেখ করুন।</p></article>
-<article class="card"><div class="symbol">📦</div><h3 data-en="Other Ferrous Grades" data-bn="অন্যান্য ফেরাস গ্রেড">অন্যান্য ফেরাস গ্রেড</h3><p data-en="Add details for a matching enquiry." data-bn="মিল খোঁজার জন্য বিস্তারিত দিন।">মিল খোঁজার জন্য বিস্তারিত দিন।</p></article>
-</div></div></section>
-<section class="section" id="register"><div class="wrap"><div class="section-head"><div class="eyebrow" style="color:var(--green)" data-en="Join our network" data-bn="আমাদের নেটওয়ার্কে যুক্ত হোন">আমাদের নেটওয়ার্কে যুক্ত হোন</div><h2 data-en="Buyer & Supplier Registration" data-bn="ক্রেতা ও সরবরাহকারী নিবন্ধন">ক্রেতা ও সরবরাহকারী নিবন্ধন</h2><p data-en="Register your business details. Your message will be prepared for WhatsApp and email." data-bn="আপনার ব্যবসার তথ্য দিন। হোয়াটসঅ্যাপ ও ইমেইলে পাঠানোর জন্য বার্তা তৈরি হবে।">আপনার ব্যবসার তথ্য দিন। হোয়াটসঅ্যাপ ও ইমেইলে পাঠানোর জন্য বার্তা তৈরি হবে।</p></div>
-<form class="panel" id="registerForm"><div class="split"><div class="field"><label data-en="I am a" data-bn="আমি">আমি</label><select name="Role" required><option value="Buyer">Buyer / ক্রেতা</option><option value="Supplier">Supplier / সরবরাহকারী</option><option value="Both">Both / উভয়</option><option value="Broker">Broker / ব্রোকার</option></select></div><div class="field"><label data-en="Contact person" data-bn="যোগাযোগকারীর নাম">যোগাযোগকারীর নাম</label><input name="Name" required></div><div class="field"><label data-en="Company / Business name" data-bn="প্রতিষ্ঠান / ব্যবসার নাম">প্রতিষ্ঠান / ব্যবসার নাম</label><input name="Company"></div><div class="field"><label data-en="Phone / WhatsApp" data-bn="ফোন / হোয়াটসঅ্যাপ">ফোন / হোয়াটসঅ্যাপ</label><input name="Phone" type="tel" required></div><div class="field"><label data-en="Business location" data-bn="ব্যবসার অবস্থান">ব্যবসার অবস্থান</label><input name="Location" placeholder="e.g. Sitakunda, Chattogram"></div><div class="field"><label data-en="Email (optional)" data-bn="ইমেইল (ঐচ্ছিক)">ইমেইল (ঐচ্ছিক)</label><input name="Email" type="email"></div></div><div class="field"><label data-en="Materials / business details" data-bn="স্ক্র্যাপের ধরন / ব্যবসার বিবরণ">স্ক্র্যাপের ধরন / ব্যবসার বিবরণ</label><textarea name="Details"></textarea></div><button class="btn primary" type="submit" data-en="Submit Registration" data-bn="নিবন্ধন পাঠান">নিবন্ধন পাঠান</button></form></div></section>
-<section class="section soft" id="marketplace"><div class="wrap"><div class="section-head"><div class="eyebrow" style="color:var(--green)" data-en="Marketplace" data-bn="মার্কেটপ্লেস">মার্কেটপ্লেস</div><h2 data-en="Post a buying or selling enquiry" data-bn="কেনা বা বিক্রির বিজ্ঞপ্তি দিন">কেনা বা বিক্রির বিজ্ঞপ্তি দিন</h2><p data-en="Submit an enquiry. A copy is saved in this browser for preview and you can send it to the platform by WhatsApp or email." data-bn="অনুরোধ জমা দিন। প্রিভিউয়ের জন্য এই ব্রাউজারে একটি কপি থাকবে এবং হোয়াটসঅ্যাপ বা ইমেইলে পাঠাতে পারবেন।">অনুরোধ জমা দিন। প্রিভিউয়ের জন্য এই ব্রাউজারে একটি কপি থাকবে এবং হোয়াটসঅ্যাপ বা ইমেইলে পাঠাতে পারবেন।</p></div>
-<div class="panel"><form id="listingForm"><div class="split"><div class="field"><label data-en="Listing type" data-bn="বিজ্ঞপ্তির ধরন">বিজ্ঞপ্তির ধরন</label><select name="Type" required><option value="BUY">BUY / কিনতে চাই</option><option value="SELL">SELL / বিক্রি করতে চাই</option></select></div><div class="field"><label data-en="Scrap grade" data-bn="স্ক্র্যাপের গ্রেড">স্ক্র্যাপের গ্রেড</label><select name="Grade"><option>HMS 1</option><option>HMS 1&2</option><option>MS Scrap</option><option>Cast Iron</option><option>Turning / Boring</option><option>Ship / Industrial Scrap</option><option>Other</option></select></div><div class="field"><label data-en="Contact person" data-bn="যোগাযোগকারীর নাম">যোগাযোগকারীর নাম</label><input name="Name" required></div><div class="field"><label data-en="Company / Yard" data-bn="প্রতিষ্ঠান / ইয়ার্ড">প্রতিষ্ঠান / ইয়ার্ড</label><input name="Company"></div><div class="field"><label data-en="Quantity (MT / kg)" data-bn="পরিমাণ (মেট্রিক টন / কেজি)">পরিমাণ (মেট্রিক টন / কেজি)</label><input name="Quantity" required></div><div class="field"><label data-en="Location" data-bn="অবস্থান">অবস্থান</label><input name="Location" required></div><div class="field"><label data-en="Price (optional)" data-bn="মূল্য (ঐচ্ছিক)">মূল্য (ঐচ্ছিক)</label><input name="Price" placeholder="BDT / MT"></div><div class="field"><label data-en="Phone / WhatsApp" data-bn="ফোন / হোয়াটসঅ্যাপ">ফোন / হোয়াটসঅ্যাপ</label><input name="Phone" type="tel" required></div></div><div class="field"><label data-en="Material specification / details" data-bn="মালের স্পেসিফিকেশন / বিবরণ">মালের স্পেসিফিকেশন / বিবরণ</label><textarea name="Details"></textarea></div><div class="field"><label data-en="Photo (preview only; not uploaded)" data-bn="ছবি (শুধু প্রিভিউ; সার্ভারে আপলোড হবে না)">ছবি (শুধু প্রিভিউ; সার্ভারে আপলোড হবে না)</label><input id="photo" type="file" accept="image/*"><div id="photoPreview" class="hint"></div></div><button class="btn primary" type="submit" data-en="Create Listing" data-bn="বিজ্ঞপ্তি তৈরি করুন">বিজ্ঞপ্তি তৈরি করুন</button></form></div>
-<div class="notice" data-en="Important: this first version is a static GitHub Pages website. Enquiries open WhatsApp/email; listings are saved only in the browser that created them. They are NOT yet shared publicly between visitors. A secure shared database and protected admin login require a backend setup." data-bn="গুরুত্বপূর্ণ: এটি GitHub Pages-এর প্রথম স্ট্যাটিক সংস্করণ। অনুরোধ হোয়াটসঅ্যাপ/ইমেইলে পাঠানো যায়; বিজ্ঞপ্তি শুধু যে ব্রাউজারে তৈরি হয়েছে সেখানেই থাকে। অন্য দর্শনার্থীরা এখনো বিজ্ঞপ্তি দেখতে পাবেন না। সবার জন্য শেয়ারড ডেটাবেস ও নিরাপদ অ্যাডমিন লগইন চালু করতে আলাদা ব্যাকএন্ড সেটআপ প্রয়োজন।">গুরুত্বপূর্ণ: এটি GitHub Pages-এর প্রথম স্ট্যাটিক সংস্করণ। অনুরোধ হোয়াটসঅ্যাপ/ইমেইলে পাঠানো যায়; বিজ্ঞপ্তি শুধু যে ব্রাউজারে তৈরি হয়েছে সেখানেই থাকে। অন্য দর্শনার্থীরা এখনো বিজ্ঞপ্তি দেখতে পাবেন না। সবার জন্য শেয়ারড ডেটাবেস ও নিরাপদ অ্যাডমিন লগইন চালু করতে আলাদা ব্যাকএন্ড সেটআপ প্রয়োজন।</div>
-<h3 data-en="Recent listings on this device" data-bn="এই ডিভাইসে তৈরি সাম্প্রতিক বিজ্ঞপ্তি">এই ডিভাইসে তৈরি সাম্প্রতিক বিজ্ঞপ্তি</h3><div class="filters"><input id="searchListings" placeholder="Search grade / location"><select id="typeFilter"><option value="">All types</option><option value="BUY">BUY</option><option value="SELL">SELL</option></select><select id="gradeFilter"><option value="">All grades</option><option>HMS 1</option><option>HMS 1&2</option><option>MS Scrap</option><option>Cast Iron</option><option>Turning / Boring</option><option>Ship / Industrial Scrap</option><option>Other</option></select></div><div id="listingGrid" class="cards"></div>
-</div></section>
-<section class="section" id="admin"><div class="wrap"><details class="admin"><summary data-en="Local Admin Tools (this browser only)" data-bn="লোকাল অ্যাডমিন টুল (শুধু এই ব্রাউজার)">লোকাল অ্যাডমিন টুল (শুধু এই ব্রাউজার)</summary><p class="hint" data-en="This is not a secure online admin panel. It only manages records stored in this browser." data-bn="এটি নিরাপদ অনলাইন অ্যাডমিন প্যানেল নয়। শুধু এই ব্রাউজারে থাকা তথ্য পরিচালনা করে।">এটি নিরাপদ অনলাইন অ্যাডমিন প্যানেল নয়। শুধু এই ব্রাউজারে থাকা তথ্য পরিচালনা করে।</p><button class="btn darkbtn" id="exportBtn" type="button" data-en="Export listings CSV" data-bn="বিজ্ঞপ্তির CSV ডাউনলোড">বিজ্ঞপ্তির CSV ডাউনলোড</button> <button class="btn outline" id="clearBtn" type="button" data-en="Clear local listings" data-bn="লোকাল বিজ্ঞপ্তি মুছুন">লোকাল বিজ্ঞপ্তি মুছুন</button></details></div></section>
-<section class="contact" id="contact"><div class="wrap foot"><div><div class="eyebrow" data-en="Let's Connect" data-bn="যোগাযোগ করুন">যোগাযোগ করুন</div><h2 data-en="Have a requirement or available stock?" data-bn="আপনার কি স্ক্র্যাপের চাহিদা বা মজুত আছে?">আপনার কি স্ক্র্যাপের চাহিদা বা মজুত আছে?</h2><p data-en="Send your details and start a conversation." data-bn="আপনার তথ্য পাঠান এবং আলোচনা শুরু করুন।">আপনার তথ্য পাঠান এবং আলোচনা শুরু করুন।</p></div><div><p>Email</p><a class="mail" href="mailto:mmdrana346@gmail.com">mmdrana346@gmail.com</a><p data-en="Chattogram, Bangladesh" data-bn="চট্টগ্রাম, বাংলাদেশ">চট্টগ্রাম, বাংলাদেশ</p><p><a class="btn primary" id="whatsAppContact" href="https://wa.me/8801823970714?text=Hello%2C%20I%20want%20to%20contact%20Chattogram%20Steel%20Scrap%20Connect." target="_blank" rel="noopener">WhatsApp Contact</a></p></div></div></section>
-</main><footer><div class="wrap foot"><span>© <span id="year"></span> Chattogram Steel Scrap Connect</span><span data-en="Brokerage connection service · Verify every transaction" data-bn="ব্রোকারেজ যোগাযোগ সেবা · প্রতিটি লেনদেন যাচাই করুন">ব্রোকারেজ যোগাযোগ সেবা · প্রতিটি লেনদেন যাচাই করুন</span></div></footer>
+<header>
+  <h1>Chattogram Steel Scrap Connect</h1>
+  <p>BUY · SELL · CONNECT</p>
+</header>
+<nav id="nav">
+  <button data-t="list" class="on">বিজ্ঞপ্তি</button>
+  <button data-t="post">বিজ্ঞপ্তি দিন</button>
+  <button data-t="join">সদস্য হোন</button>
+  <button data-t="admin">অ্যাডমিন</button>
+</nav>
+<main>
+
+<section id="list" class="sec on">
+  <div class="filters">
+    <input id="q" placeholder="খুঁজুন (স্ক্র্যাপের নাম, এলাকা…)">
+    <select id="ft"><option value="">সব ধরন</option><option value="sell">বিক্রয়</option><option value="buy">ক্রয়</option></select>
+    <button class="btn gray" id="reload">রিফ্রেশ</button>
+  </div>
+  <div id="listings"></div>
+</section>
+
+<section id="post" class="sec">
+  <h2>নতুন বিজ্ঞপ্তি দিন</h2>
+  <p class="meta">অ্যাডমিন অনুমোদন দিলে বিজ্ঞপ্তি সাইটে দেখা যাবে।</p>
+  <form id="postForm">
+    <label>ধরন</label>
+    <select name="type" required><option value="sell">স্ক্র্যাপ বিক্রি করব</option><option value="buy">স্ক্র্যাপ কিনব</option></select>
+    <label>শিরোনাম</label><input name="title" required placeholder="যেমন: ২০ টন এমএস স্ক্র্যাপ">
+    <label>স্ক্র্যাপের ধরন</label><input name="scrap_type" required placeholder="লোহা, স্টিল, শিপ ব্রেকিং…">
+    <div class="two">
+      <div><label>পরিমাণ</label><input name="quantity" type="number" step="any" inputmode="decimal"></div>
+      <div><label>একক</label><select name="unit"><option>ton</option><option>kg</option><option>pcs</option></select></div>
+    </div>
+    <div class="two">
+      <div><label>দাম (টাকা)</label><input name="price" type="number" step="any" inputmode="decimal"></div>
+      <div><label>দামের নোট</label><input name="price_note" placeholder="প্রতি টন / আলোচনা সাপেক্ষ"></div>
+    </div>
+    <label>এলাকা</label><input name="area" placeholder="যেমন: কুমিরা, ফৌজদারহাট">
+    <label>বিবরণ</label><textarea name="description"></textarea>
+    <label>আপনার নাম</label><input name="contact_name" required>
+    <div class="two">
+      <div><label>ফোন</label><input name="phone" required inputmode="tel" placeholder="01XXXXXXXXX"></div>
+      <div><label>WhatsApp</label><input name="whatsapp" inputmode="tel" placeholder="খালি থাকলে ফোন নম্বর"></div>
+    </div>
+    <label>ছবি (সর্বোচ্চ ৪টি)</label>
+    <input id="imgs" type="file" accept="image/*" multiple>
+    <div class="prev" id="prev"></div>
+    <div id="postMsg" class="msg"></div>
+    <div class="row"><button class="btn" id="postBtn" type="submit">জমা দিন</button></div>
+  </form>
+</section>
+
+<section id="join" class="sec">
+  <h2>Buyer / Supplier নেটওয়ার্কে যোগ দিন</h2>
+  <form id="joinForm">
+    <label>আপনি কে?</label>
+    <select name="role"><option value="buyer">ক্রেতা (Buyer)</option><option value="supplier">সরবরাহকারী (Supplier)</option><option value="both">দুটোই</option></select>
+    <label>নাম</label><input name="name" required>
+    <label>প্রতিষ্ঠান</label><input name="company">
+    <div class="two">
+      <div><label>ফোন</label><input name="phone" required inputmode="tel"></div>
+      <div><label>WhatsApp</label><input name="whatsapp" inputmode="tel"></div>
+    </div>
+    <label>এলাকা</label><input name="area">
+    <label>ঠিকানা</label><input name="address">
+    <div id="joinMsg" class="msg"></div>
+    <div class="row"><button class="btn" type="submit">আবেদন পাঠান</button></div>
+  </form>
+</section>
+
+<section id="admin" class="sec">
+  <div id="loginBox">
+    <h2>অ্যাডমিন লগইন</h2>
+    <form id="loginForm">
+      <label>ইমেইল</label><input name="email" type="email" required autocomplete="username">
+      <label>পাসওয়ার্ড</label><input name="password" type="password" required autocomplete="current-password">
+      <div id="loginMsg" class="msg"></div>
+      <div class="row"><button class="btn" type="submit">লগইন</button></div>
+    </form>
+  </div>
+  <div id="dash" style="display:none">
+    <div class="row" style="justify-content:space-between;margin:0 0 10px"><h2 style="margin:0">ড্যাশবোর্ড</h2><button class="btn gray sm" id="logout">লগআউট</button></div>
+    <div class="tabs2" id="atabs">
+      <button class="btn sm" data-a="listings">বিজ্ঞপ্তি</button>
+      <button class="btn gray sm" data-a="members">সদস্য</button>
+      <button class="btn gray sm" data-a="inquiries">বার্তা</button>
+    </div>
+    <div id="adminList"></div>
+  </div>
+</section>
+
+</main>
+
+<div class="modal" id="inqModal"><div class="box">
+  <h2>আগ্রহ জানান</h2>
+  <form id="inqForm">
+    <input type="hidden" name="listing_id">
+    <label>আপনার নাম</label><input name="name" required>
+    <label>ফোন</label><input name="phone" required inputmode="tel">
+    <label>বার্তা</label><textarea name="message"></textarea>
+    <div id="inqMsg" class="msg"></div>
+    <div class="row"><button class="btn" type="submit">পাঠান</button><button class="btn gray" type="button" id="inqClose">বন্ধ</button></div>
+  </form>
+</div></div>
+
+<footer>© Chattogram Steel Scrap Connect</footer>
+
 <script>
-/* IMPORTANT: Replace the placeholder with your WhatsApp number in international format, digits only. Example: 8801XXXXXXXXX */
-const WHATSAPP_NUMBER = "8801823970714";
-const CONTACT_EMAIL = "mmdrana346@gmail.com";
-let lang='bn';
-const langBtn=document.getElementById('langBtn');
-function setLang(next){lang=next;document.documentElement.lang=next;document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=el.dataset[next]});langBtn.textContent=next==='en'?'বাংলা':'English'}
-langBtn.addEventListener('click',()=>setLang(lang==='en'?'bn':'en'));
-document.getElementById('year').textContent=new Date().getFullYear();
-const waReady=()=>/^\d{10,15}$/.test(WHATSAPP_NUMBER);
-function sendWhatsApp(text){if(!waReady()){alert('WhatsApp নম্বরটি সঠিকভাবে সেট করা নেই।');return false;}window.location.href='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(text);return true;}
-function formText(title,data){return title+'\n\n'+[...data.entries()].map(([k,v])=>k+': '+v).join('\n')+'\n\nWebsite: Chattogram Steel Scrap Connect';}
-function sendEmail(subject,body){location.href='mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);}
-document.getElementById('registerForm').addEventListener('submit',e=>{e.preventDefault();const body=formText('Business Registration',new FormData(e.currentTarget));sendWhatsApp(body);sendEmail('Business Registration - Steel Scrap Connect',body);e.currentTarget.reset();});
-let listings=JSON.parse(localStorage.getItem('cssc_listings')||'[]');
-const photoInput=document.getElementById('photo'), photoPreview=document.getElementById('photoPreview');
-photoInput.addEventListener('change',()=>{photoPreview.textContent=photoInput.files[0]?'Selected: '+photoInput.files[0].name+' (preview only; not uploaded)':'';});
-document.getElementById('listingForm').addEventListener('submit',e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.currentTarget).entries());data.id=Date.now();data.created=new Date().toLocaleString();listings.unshift(data);localStorage.setItem('cssc_listings',JSON.stringify(listings));const body=formText('New Scrap '+data.Type+' Listing',new FormData(e.currentTarget));renderListings();sendWhatsApp(body);sendEmail('New Scrap '+data.Type+' Listing',body);e.currentTarget.reset();photoPreview.textContent='';});
-function renderListings(){const q=document.getElementById('searchListings').value.toLowerCase(),t=document.getElementById('typeFilter').value,g=document.getElementById('gradeFilter').value;const rows=listings.filter(x=>(!t||x.Type===t)&&(!g||x.Grade===g)&&[x.Grade,x.Location,x.Company,x.Details].join(' ').toLowerCase().includes(q));const grid=document.getElementById('listingGrid');if(!rows.length){grid.innerHTML='<div class="empty">এখনো কোনো বিজ্ঞপ্তি নেই। প্রথম বিজ্ঞপ্তিটি যোগ করুন।</div>';return;}grid.innerHTML=rows.map(x=>`<article class="card listing"><div><span class="tag">${x.Type}</span> <span class="tag">${escapeHtml(x.Grade)}</span></div><h3>${escapeHtml(x.Grade)} · ${escapeHtml(x.Quantity||'')}</h3><div class="meta">${escapeHtml(x.Location||'')} · ${escapeHtml(x.created||'')}</div><p><b>${escapeHtml(x.Company||x.Name||'')}</b></p><p>${escapeHtml(x.Details||'')}</p><p>${x.Price?'Price: '+escapeHtml(x.Price):''}</p><div class="listing-actions"><button class="btn primary" onclick="contactListing(${x.id})">Contact / WhatsApp</button><button class="btn outline" onclick="deleteListing(${x.id})">Delete (local)</button></div></article>`).join('');}
-function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-window.contactListing=id=>{const x=listings.find(a=>a.id===id);if(!x)return;sendWhatsApp('Interested in your scrap listing:\n'+Object.entries(x).filter(([k])=>k!=='id').map(([k,v])=>k+': '+v).join('\n'));};
-window.deleteListing=id=>{if(confirm('এই ডিভাইস থেকে বিজ্ঞপ্তিটি মুছবেন?')){listings=listings.filter(x=>x.id!==id);localStorage.setItem('cssc_listings',JSON.stringify(listings));renderListings();}};
-['searchListings','typeFilter','gradeFilter'].forEach(id=>document.getElementById(id).addEventListener('input',renderListings));
-document.getElementById('exportBtn').addEventListener('click',()=>{const keys=['Type','Grade','Name','Company','Quantity','Location','Price','Phone','Details','created'];const csv=[keys.join(','),...listings.map(x=>keys.map(k=>'"'+String(x[k]||'').replace(/"/g,'""')+'"').join(','))].join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='cssc-listings.csv';a.click();URL.revokeObjectURL(a.href);});
-document.getElementById('clearBtn').addEventListener('click',()=>{if(confirm('এই ব্রাউজারের সব লোকাল বিজ্ঞপ্তি মুছবেন?')){listings=[];localStorage.removeItem('cssc_listings');renderListings();}});
-// WhatsApp contact uses a direct wa.me link to avoid popup blockers.
-renderListings();
-</script></body></html>
+const SUPABASE_URL="https://rpvwdlmexlnfwabmpfji.supabase.co";
+const SUPABASE_KEY="sb_publishable_qAfkcYvTXs-cfnzufD5vYg_xX7F5dVa";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const bnum=s=>{let d=String(s||"").replace(/\D/g,"");if(d.startsWith("880"))return d;if(d.startsWith("0"))return "88"+d;return d?"880"+d:""};
+function msg(el,t,ok){el.className="msg "+(ok?"ok":"err");el.textContent=t}
+
+// ট্যাব
+document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#nav button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
+  document.querySelectorAll(".sec").forEach(s=>s.classList.remove("on"));$("#"+b.dataset.t).classList.add("on");
+  if(b.dataset.t==="admin")checkAdmin();
+});
+
+// বিজ্ঞপ্তি তালিকা
+async function loadListings(){
+  const box=$("#listings");box.innerHTML='<div class="empty">লোড হচ্ছে…</div>';
+  let q=sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false}).limit(100);
+  const t=$("#ft").value;if(t)q=q.eq("type",t);
+  const {data,error}=await q;
+  if(error){box.innerHTML='<div class="empty">লোড করা যায়নি: '+esc(error.message)+'</div>';return}
+  const kw=$("#q").value.trim().toLowerCase();
+  const rows=(data||[]).filter(r=>!kw||[r.title,r.scrap_type,r.area,r.description].join(" ").toLowerCase().includes(kw));
+  if(!rows.length){box.innerHTML='<div class="empty">কোনো বিজ্ঞপ্তি নেই</div>';return}
+  box.innerHTML=rows.map(cardHtml).join("");
+}
+function cardHtml(r){
+  const wa=bnum(r.whatsapp||r.phone);
+  const imgs=(r.images||[]).length?'<div class="imgs">'+r.images.map(u=>'<img loading="lazy" src="'+esc(u)+'" alt="">').join("")+'</div>':"";
+  const price=r.price?Number(r.price).toLocaleString("bn-BD")+" ৳ "+esc(r.price_note||""):esc(r.price_note||"আলোচনা সাপেক্ষ");
+  const qty=r.quantity?Number(r.quantity).toLocaleString("bn-BD")+" "+esc(r.unit||""):"";
+  const text=encodeURIComponent("আসসালামু আলাইকুম, Chattogram Steel Scrap Connect-এ আপনার বিজ্ঞপ্তি দেখলাম: "+r.title);
+  return '<div class="card">'+imgs+'<div class="pad">'+
+   '<span class="badge '+r.type+'">'+(r.type==="sell"?"বিক্রয়":"ক্রয়")+'</span>'+
+   '<h3>'+esc(r.title)+'</h3>'+
+   '<div class="meta">'+esc(r.scrap_type)+(qty?" · "+qty:"")+(r.area?" · "+esc(r.area):"")+'</div>'+
+   '<div style="margin-top:6px;font-weight:600">'+price+'</div>'+
+   (r.description?'<p class="meta" style="margin:8px 0 0">'+esc(r.description)+'</p>':"")+
+   '<div class="row">'+
+   (wa?'<a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/'+wa+'?text='+text+'">WhatsApp</a>':"")+
+   (r.phone?'<a class="btn gray" href="tel:'+esc(r.phone)+'">কল</a>':"")+
+   '<button class="btn gray" data-inq="'+r.id+'">আগ্রহ জানান</button></div>'+
+   '</div></div>';
+}
+$("#reload").onclick=loadListings;$("#ft").onchange=loadListings;
+let tm;$("#q").oninput=()=>{clearTimeout(tm);tm=setTimeout(loadListings,300)};
+document.addEventListener("click",e=>{const id=e.target.dataset&&e.target.dataset.inq;if(id){$("#inqForm").listing_id.value=id;$("#inqMsg").className="msg";$("#inqModal").classList.add("on")}});
+$("#inqClose").onclick=()=>$("#inqModal").classList.remove("on");
+$("#inqForm").onsubmit=async e=>{e.preventDefault();const f=e.target;
+  const {error}=await sb.from("inquiries").insert({listing_id:f.listing_id.value,name:f.name.value,phone:f.phone.value,message:f.message.value});
+  if(error)return msg($("#inqMsg"),"পাঠানো যায়নি: "+error.message,false);
+  msg($("#inqMsg"),"পাঠানো হয়েছে। ধন্যবাদ!",true);f.reset();setTimeout(()=>$("#inqModal").classList.remove("on"),1200)};
+
+// ছবি প্রিভিউ ও ছোট করা
+$("#imgs").onchange=e=>{const box=$("#prev");box.innerHTML="";[...e.target.files].slice(0,4).forEach(f=>{const i=document.createElement("img");i.src=URL.createObjectURL(f);box.appendChild(i)})};
+function shrink(file,max=1200){return new Promise((res,rej)=>{const img=new Image();img.onload=()=>{const s=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext("2d").drawImage(img,0,0,c.width,c.height);c.toBlob(b=>b?res(b):rej(new Error("ছবি প্রসেস হয়নি")),"image/jpeg",0.8)};img.onerror=()=>rej(new Error("ছবি পড়া যায়নি"));img.src=URL.createObjectURL(file)})}
+
+// বিজ্ঞপ্তি জমা
+$("#postForm").onsubmit=async e=>{e.preventDefault();const f=e.target,m=$("#postMsg"),btn=$("#postBtn");
+  btn.disabled=true;msg(m,"জমা হচ্ছে…",true);
+  try{
+    const urls=[];const files=[...$("#imgs").files].slice(0,4);
+    for(const file of files){const blob=await shrink(file);const path=Date.now()+"-"+Math.random().toString(36).slice(2,8)+".jpg";
+      const {error}=await sb.storage.from("listing-images").upload(path,blob,{contentType:"image/jpeg"});
+      if(error)throw error;urls.push(sb.storage.from("listing-images").getPublicUrl(path).data.publicUrl)}
+    const n=k=>f[k].value===""?null:Number(f[k].value);
+    const row={type:f.type.value,title:f.title.value.trim(),scrap_type:f.scrap_type.value.trim(),quantity:n("quantity"),unit:f.unit.value,price:n("price"),price_note:f.price_note.value||null,area:f.area.value||null,description:f.description.value||null,contact_name:f.contact_name.value.trim(),phone:f.phone.value.trim(),whatsapp:f.whatsapp.value.trim()||null,images:urls,status:"pending"};
+    const {error}=await sb.from("listings").insert(row);if(error)throw error;
+    msg(m,"বিজ্ঞপ্তি জমা হয়েছে। অনুমোদনের পর সাইটে দেখা যাবে।",true);f.reset();$("#prev").innerHTML="";
+  }catch(err){msg(m,"সমস্যা: "+(err.message||err),false)}
+  btn.disabled=false};
+
+// সদস্য আবেদন
+$("#joinForm").onsubmit=async e=>{e.preventDefault();const f=e.target;
+  const {error}=await sb.from("members").insert({role:f.role.value,name:f.name.value.trim(),company:f.company.value||null,phone:f.phone.value.trim(),whatsapp:f.whatsapp.value.trim()||null,area:f.area.value||null,address:f.address.value||null,status:"pending"});
+  if(error)return msg($("#joinMsg"),"সমস্যা: "+error.message,false);
+  msg($("#joinMsg"),"আবেদন জমা হয়েছে। যাচাইয়ের পর যোগাযোগ করা হবে।",true);f.reset()};
+
+// অ্যাডমিন
+let curTab="listings";
+async function checkAdmin(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){$("#loginBox").style.display="";$("#dash").style.display="none";return}
+  const {data}=await sb.from("admins").select("user_id").eq("user_id",session.user.id);
+  if(!data||!data.length){await sb.auth.signOut();$("#loginBox").style.display="";$("#dash").style.display="none";msg($("#loginMsg"),"এই অ্যাকাউন্টে অ্যাডমিন অনুমতি নেই",false);return}
+  $("#loginBox").style.display="none";$("#dash").style.display="";loadAdmin();
+}
+$("#loginForm").onsubmit=async e=>{e.preventDefault();const f=e.target;
+  const {error}=await sb.auth.signInWithPassword({email:f.email.value,password:f.password.value});
+  if(error)return msg($("#loginMsg"),"লগইন হয়নি: "+error.message,false);
+  f.reset();checkAdmin()};
+$("#logout").onclick=async()=>{await sb.auth.signOut();checkAdmin()};
+document.querySelectorAll("#atabs button").forEach(b=>b.onclick=()=>{curTab=b.dataset.a;document.querySelectorAll("#atabs button").forEach(x=>x.className="btn gray sm");b.className="btn sm";loadAdmin()});
+
+async function loadAdmin(){
+  const box=$("#adminList");box.innerHTML='<div class="empty">লোড হচ্ছে…</div>';
+  const {data,error}=await sb.from(curTab).select("*").order("created_at",{ascending:false}).limit(200);
+  if(error){box.innerHTML='<div class="empty">'+esc(error.message)+'</div>';return}
+  if(!data.length){box.innerHTML='<div class="empty">কিছু নেই</div>';return}
+  box.innerHTML=data.map(r=>{
+    if(curTab==="listings")return '<div class="card"><div class="pad"><span class="badge '+r.status+'">'+r.status+'</span> <span class="badge '+r.type+'">'+r.type+'</span><h3>'+esc(r.title)+'</h3><div class="meta">'+esc(r.scrap_type)+' · '+esc(r.area||"")+' · '+esc(r.contact_name||"")+' · '+esc(r.phone||"")+'</div>'+((r.images||[]).length?'<div class="prev">'+r.images.map(u=>'<img src="'+esc(u)+'">').join("")+'</div>':"")+'<div class="row"><button class="btn sm" data-act="approved" data-id="'+r.id+'">অনুমোদন</button><button class="btn gray sm" data-act="rejected" data-id="'+r.id+'">বাতিল</button><button class="btn gray sm" data-act="sold" data-id="'+r.id+'">বিক্রিত</button><button class="btn red sm" data-del="'+r.id+'">মুছুন</button></div></div></div>';
+    if(curTab==="members")return '<div class="card"><div class="pad"><span class="badge '+r.status+'">'+r.status+'</span> <span class="badge sell">'+esc(r.role)+'</span><h3>'+esc(r.name)+(r.company?" — "+esc(r.company):"")+'</h3><div class="meta">'+esc(r.phone)+' · '+esc(r.area||"")+'</div><div class="row"><button class="btn sm" data-act="approved" data-id="'+r.id+'">অনুমোদন</button><button class="btn gray sm" data-act="rejected" data-id="'+r.id+'">বাতিল</button><button class="btn red sm" data-del="'+r.id+'">মুছুন</button></div></div></div>';
+    return '<div class="card"><div class="pad"><h3>'+esc(r.name)+' · '+esc(r.phone)+'</h3><div class="meta">'+esc(r.message||"")+'</div><div class="meta">'+new Date(r.created_at).toLocaleString("bn-BD")+'</div><div class="row"><a class="btn wa sm" target="_blank" rel="noopener" href="https://wa.me/'+bnum(r.phone)+'">WhatsApp</a><button class="btn red sm" data-del="'+r.id+'">মুছুন</button></div></div></div>';
+  }).join("");
+}
+$("#adminList").onclick=async e=>{const t=e.target;
+  if(t.dataset.act){const {error}=await sb.from(curTab).update({status:t.dataset.act}).eq("id",t.dataset.id);if(error)alert(error.message);loadAdmin()}
+  if(t.dataset.del&&confirm("সত্যিই মুছবেন?")){const {error}=await sb.from(curTab).delete().eq("id",t.dataset.del);if(error)alert(error.message);loadAdmin()}};
+
+loadListings();
+</script>
+</body>
+</html>
