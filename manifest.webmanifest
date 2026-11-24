@@ -1,0 +1,13 @@
+
+{
+  "name": "Chattogram Steel Scrap Connect",
+  "short_name": "Scrap Connect",
+  "description": "Steel Scrap Buyers and Suppliers Marketplace in Chattogram",
+  "lang": "bn",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1210",
+  "theme_color": "#0a9d4a"
+}
